@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+    <title>Sliding Carousel Demonstration Test</title>
+    <link rel="stylesheet" href="css/sliding-carousel.css" />
+    <script src="js/jquery-1.7.min.js" type="text/javascript"></script>
+    <script src="js/jquery-slidingCarousel.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var carousel = $("#carousel").slidingCarousel({
+            hDiff: 20,
+            wDiff: 100
+        });
+      });
+    </script>
+
+  </head>
+  <body>
+    <div class="carousel-container">
+      <div id="carousel">
+        <div class="slide">
+          <a href="#"><img class="carousel-image" alt="Image Caption" src="images/carousel-1.jpg"></a>
+          <div class="carousel-caption">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur elit.
+            </p>
+          </div>
+        </div>
+        <div class="slide">
+          <a href="#"><img class="carousel-image" alt="Image Caption" src="images/carousel-2.jpg"></a>
+          <div class="carousel-caption">
+            <p>
+              Aliquam at tincidunt metus.
+            </p>
+          </div>
+        </div>
+        <div class="slide">
+          <a href="#"><img class="carousel-image" alt="Image Caption" src="images/carousel-3.jpg"></a>
+          <div class="carousel-caption">
+            <p>
+              Donec pellentesque leo ac risus porta non rhoncus nisi vehicula.
+            </p>
+          </div>
+        </div>
+        <div class="slide">
+          <a href="#"><img class="carousel-image" alt="Image Caption" src="images/carousel-4.jpg"></a>
+          <div class="carousel-caption">
+            <p>
+              Donec augue mi, ullamcorper vel placerat.
+            </p>
+          </div>
+        </div>
+        <div class="slide">
+          <a href="#"><img class="carousel-image" alt="Image Caption" src="images/carousel-5.jpg"></a>
+          <div class="carousel-caption">
+            <p>
+              Curabitur nec dapibus neque. Aenean orci enim, rutrum ac lacinia in, dapibus sit amet lorem.
+            </p>
+          </div>
+        </div>
+        <div class="slide">
+          <a href="#"><img class="carousel-image" alt="Image Caption" src="images/carousel-6.jpg"></a>
+          <div class="carousel-caption">
+            <p>
+              Praesent tortor neque, pulvinar non faucibus a, vestibulum a massa.
+            </p>
+
+          </div>
+        </div>
+        <div class="slide">
+          <a href="#"><img class="carousel-image" alt="Image Caption" src="images/carousel-7.jpg"></a>
+          <div class="carousel-caption">
+            <p>
+              Praesent molestie molestie ultrices. Mauris adipiscing suscipit pulvinar.
+            </p>
+          </div>
+        </div>
+      </div>
+    
+      <div id="carousel-left"><img src="images/arrow-left.png" /></div>
+      <div id="carousel-right"><img src="images/arrow-right.png" /></div>
+    </div>
+  
+  </body>
+</html>
