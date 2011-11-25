@@ -106,12 +106,12 @@
                       top      : top, 
                       left     : posx += (i < mid) ? diff : images[i-1].cWidth + diff - img.cWidth,
                       opacity  : 0
-                  }).show().animate({opacity: ((i+1) % mid) ? sin[j++]*0.8 : 1});
-
+                  }).show().animate({opacity: i==mid-1 ? 1 : sin[j++]*0.8 }, function() {
+                      if (i == mid-1)
+                          addDescription($(img));
+                  });
                   if (options.shadow)
                       $(img).addClass('shadow');
-                  if (i == mid-1)
-                      addDescription($(img));
               }
           });
       };
