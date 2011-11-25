@@ -92,10 +92,10 @@
                       zIndex   : mid-idx,
                       top      : top,          
                       left     : posx += (i < mid) ? diff : images[i-1].cWidth + diff - img.cWidth, 
-                      opacity  : ((i+1) % mid) ? sin[j++]*0.8 : 1
+                      opacity  : sin[j++]*0.8
                   }, options.animate, function() {
                       if (i == mid-1)
-                          addDescription($(img));
+                          addDescription($(img).css('opacity',1));
                   });
               }
               else
