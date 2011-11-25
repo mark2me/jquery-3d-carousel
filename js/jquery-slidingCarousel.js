@@ -72,7 +72,7 @@
               sin  = pluginData.sinus,
               posx = 0,
               diff = 0, 
-              height = images[mid-1].origH, top, idx, j=1;
+              height = images[mid-1].origH, top, left, idx, j=1;
 
           // hide description before doing layout
           pluginData.container.find('.carousel-caption').hide();
@@ -81,22 +81,24 @@
               idx = Math.abs(i+1-mid);
               top = idx * options.hDiff;
 
-              diff = sin[i] * options.wDiff;
-
               // calculating new width and caching it for later use
               img.cWidth = (height-(top*2)) * img.ratio;
+
+              diff = sin[i] * options.wDiff;
+              left = posx += (i < mid) ? diff : images[i-1].cWidth + diff - img.cWidth;
+
+              var fn = function() {
+                  if (i === mid-1) addDescription($(img));
+              };
 
               if (animate) {
                   $(img).animate({
                       height   : height - (top*2),
                       zIndex   : mid-idx,
                       top      : top,          
-                      left     : posx += (i < mid) ? diff : images[i-1].cWidth + diff - img.cWidth, 
+                      left     : left,
                       opacity  : i==mid-1 ? 1 : sin[j++]*0.8
-                  }, options.animate, function() {
-                      if (i == mid-1)
-                          addDescription($(img));
-                  });
+                  }, options.animate, fn);
               }
               else
               {
@@ -104,12 +106,10 @@
                       zIndex   : mid-idx,
                       height   : height - (top*2),
                       top      : top, 
-                      left     : posx += (i < mid) ? diff : images[i-1].cWidth + diff - img.cWidth,
+                      left     : left,
                       opacity  : 0
-                  }).show().animate({opacity: i==mid-1 ? 1 : sin[j++]*0.8 }, function() {
-                      if (i == mid-1)
-                          addDescription($(img));
-                  });
+                  }).show().animate({opacity: i==mid-1 ? 1 : sin[j++]*0.8 }, fn);
+
                   if (options.shadow)
                       $(img).addClass('shadow');
               }
