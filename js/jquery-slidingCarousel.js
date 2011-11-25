@@ -11,21 +11,28 @@
       
       var preload = function(callback) {
           var images = pluginData.container.find("img"),
-              total = images.length,
+              total  = images.length,
+              result = [],
               loaded = 0;
 
           images.each(function (index, element) {
 			  var img = new Image();
+
               $(img).bind('load error', function () {
                   loaded++;
+
+                  // push loaded images into regular array
+                  result.push(element);
+
+                  // need ratio for calculating new widths
+                  element.ratio = this.width / this.height;
+                  element.origH = this.height;
 
                   if (loaded == total) {
                       var mid = ~~(total / 2)+(total % 2);
 
                       pluginData.mIndex = mid;
-                      pluginData.images = $.map(images, function(val, i) {
-                          return { img: val, height: $(val).height(), width: $(val).width() };
-                      });
+                      pluginData.images = result;
 
                       // prepare symetric sinus table
                       
@@ -65,48 +72,46 @@
               sin  = pluginData.sinus,
               posx = 0,
               diff = 0, 
-              hiff = 0,
-              height = images[mid-1].height, top, idx, img, j=1;
+              height = images[mid-1].origH, top, idx, j=1;
 
           // hide description before doing layout
           pluginData.container.find('.carousel-caption').hide();
 
-
-          $.each(images, function(i,e) {
-              img = $(e.img);
+          $.each(images, function(i, img) {
               idx = Math.abs(i+1-mid);
               top = idx * options.hDiff;
 
               diff = sin[i] * options.wDiff;
-              hiff = e.height - (height-(top*3));
 
-              e.wd = e.width - hiff;
+              // calculating new width and caching it for later use
+              img.cWidth = (height-(top*2)) * img.ratio;
 
               if (animate) {
-                  img.animate({
+                  $(img).animate({
                       height   : height - (top*2),
                       zIndex   : mid-idx,
                       top      : top,          
-                      left     : posx += (i < mid) ? diff : images[i-1].wd + diff - (e.width - hiff), 
+                      left     : posx += (i < mid) ? diff : images[i-1].cWidth + diff - img.cWidth, 
                       opacity  : ((i+1) % mid) ? sin[j++]*0.8 : 1
                   }, options.animate, function() {
-                      addDescription($(images[mid-1].img));
+                      if (i == mid-1)
+                          addDescription($(img));
                   });
               }
               else
               {
-                  img.css({
+                  $(img).css({
                       zIndex   : mid-idx,
                       height   : height - (top*2),
                       top      : top, 
-                      left     : posx += (i < mid) ? diff : images[i-1].wd + diff - (e.width - hiff), 
+                      left     : posx += (i < mid) ? diff : images[i-1].cWidth + diff - img.cWidth,
                       opacity  : 0
                   }).show().animate({opacity: ((i+1) % mid) ? sin[j++]*0.8 : 1});
 
                   if (options.shadow)
-                      img.addClass('shadow');
+                      $(img).addClass('shadow');
                   if (i == mid-1)
-                      addDescription(img);
+                      addDescription($(img));
               }
           });
       };
