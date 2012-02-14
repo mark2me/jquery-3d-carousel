@@ -10,7 +10,7 @@
       };
 
       var preload = function(callback) {
-          var images = pluginData.container.find("img"),
+          var images = pluginData.container.find(".slide img"),
               total  = images.length,
               result = [],
               loaded = 0;
@@ -120,8 +120,11 @@
                       $(img).addClass('shadow');
               }
           });
-          $('#carousel-left').css('left', middle+50);
-          $('#carousel-right').css('left', middle+width-24-50);
+
+          if (!animate) {
+              $('#carousel-left').css('left', middle+50);
+              $('#carousel-right').css('left', middle+width-75);
+          }
       };
 
       var addDescription = function(img) {
