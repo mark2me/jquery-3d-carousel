@@ -41,7 +41,7 @@
                           pluginData.sinus[n] = (n<=mid) ? Math.sin(freq+=(1.6/mid)) : pluginData.sinus[total-n];
 
                           if (n < mid)
-                              pluginData.sinsum += pluginData.sinus[n]*options.wDiff;
+                              pluginData.sinsum += pluginData.sinus[n]*options.squeeze;
                       };
                       callback(pluginData.images);
                   }
@@ -85,12 +85,12 @@
 
           $.each(images, function(i, img) {
               idx = Math.abs(i+1-mid);
-              top = idx * options.hDiff;
+              top = idx * 15;
 
               // calculating new width and caching it for later use
               img.cWidth = (height-(top*2)) * img.ratio;
 
-              diff = sin[i] * options.wDiff;
+              diff = sin[i] * options.squeeze;
               left = posx += (i < mid) ? diff : images[i-1].cWidth + diff - img.cWidth;
 
               var fn = function() {
@@ -149,9 +149,8 @@
   };
 
   $.fn.slidingCarousel.defaults = {
-      hDiff: 15,
-      wDiff: 124,
       shadow: true,
+      squeeze: 124,
       animate: 250
   };
 
