@@ -44,7 +44,7 @@
 
 .carousel-image {
   border: 0;
-  display: block;
+  display: none;
   position: absolute;
 }
 
