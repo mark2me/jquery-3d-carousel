@@ -41,6 +41,8 @@ $("#carousel").slidingCarousel({
 
 #### Options:
 
- squeeze - slides "squeeze" ratio.
- animate - duration of animated rotation.
- shadow  - true for visible shadow, false otherwise.
+```
+   squeeze - slides "squeeze" ratio.
+   animate - duration of animated rotation.
+   shadow  - true for visible shadow, false otherwise.
+```
