@@ -4,7 +4,7 @@ This is a jQuery plugin that shows your images in a cover-flow fashion.
 
 Here's a working example:
 
-http://undertaker.rootnode.net/jQuery-Sliding-Carousel/index.html
+http://buczko.pl/jQuery-Sliding-Carousel/
 
 #### Usage:
 
