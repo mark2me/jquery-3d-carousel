@@ -10,7 +10,7 @@
 		};
 
 		var preload = function(callback) {
-			var images = pluginData.container.find(".slide img"),
+			var images = pluginData.container.find('.slide img'),
 				total  = images.length,
 				shift  = total % 2,
 				middle = total < 3 ? total : ~~(total / 2) + shift,
@@ -39,6 +39,7 @@
 					// need ratio for calculating new widths
 					element.ratio = this.width / this.height;
 					element.origH = this.height;
+					element.idx   = index;
 
 					if (loaded == total) {
 						pluginData.mIndex = middle;
@@ -67,6 +68,16 @@
 
 		var setupEvents = function() {
 			pluginData.container
+				.find ('.slide p > a').click(function(e) {
+					var idx = $(this).find('img')[0].idx,
+						arr = pluginData.images;
+
+					while (arr[pluginData.mIndex-1].idx != idx ) {
+						arr.push(arr.shift());
+					}
+					doLayout(arr, true);
+				})
+				.end()
 				.find('.navigate-right').click(function() {
 					var images = pluginData.images;
 

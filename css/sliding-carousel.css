@@ -17,6 +17,10 @@
   overflow: hidden;
 }
 
+#carousel .slide a:hover img {
+  margin-top: 2px;
+}
+
 #carousel .slide img {
   width:  100%;
   height: 100%;
