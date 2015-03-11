@@ -12,6 +12,8 @@
       var preload = function(callback) {
           var images = pluginData.container.find(".slide img"),
               total  = images.length,
+			  shift  = total % 2,
+			  middle = total < 3 ? total : ~~(total / 2) + shift,
               result = [],
               loaded = 0;
 
@@ -21,28 +23,36 @@
               $(img).bind('load error', function () {
                   loaded++;
 
-                  // push loaded images into regular array
-                  result.push(element);
+                  // push loaded images into regular array.
+				  // to preserve the order array gets constructed so, that elements indexed:
+				  //
+				  //    0 1 2 3 4 5 6
+				  //
+				  // are shifted within destination array by half of total length (-1 depending on parity/oddness):
+				  //
+				  //    6 5 4 0 1 2 3
+				  //
+				  // and finally reversed to get correct scrolling direction.
+
+                  result[(index+middle-shift) % total] = element;
 
                   // need ratio for calculating new widths
                   element.ratio = this.width / this.height;
                   element.origH = this.height;
 
                   if (loaded == total) {
-                      var mid = ~~(total / 2)+(total % 2);
-
-                      pluginData.mIndex = mid;
-                      pluginData.images = result;
-                      pluginData.sinsum = 0;
+                      pluginData.mIndex = middle;
+					  pluginData.sinsum = 0;
+                      pluginData.images = result.reverse();
 
                       // prepare symetric sinus table
 
                       for (var n=1, freq=0; n<total; n++) {
-                          pluginData.sinus[n] = (n<=mid) ? Math.sin(freq+=(1.6/mid)) : pluginData.sinus[total-n];
+                          pluginData.sinus[n] = (n<=middle) ? Math.sin(freq+=(1.6/middle)) : pluginData.sinus[total-n];
 
-                          if (n < mid)
+                          if (n < middle)
                               pluginData.sinsum += pluginData.sinus[n]*options.squeeze;
-                      };
+                      }
                       callback(pluginData.images);
                   }
               });
