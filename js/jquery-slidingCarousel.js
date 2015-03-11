@@ -66,18 +66,20 @@
 		};
 
 		var setupEvents = function() {
-			$('#carousel-right').click(function() {
-				var images = pluginData.images;
+			pluginData.container
+				.find('.navigate-right').click(function() {
+					var images = pluginData.images;
 
-				images.splice(0,0,images.pop());
-				doLayout(images, true);
-			});
-			$('#carousel-left').click(function() {
-				var images = pluginData.images;
+					images.splice(0,0,images.pop());
+					doLayout(images, true);
+				})
+				.end()
+				.find('.navigate-left').click(function() {
+					var images = pluginData.images;
 
-				images.push(images.shift());
-				doLayout(images, true);
-			});
+					images.push(images.shift());
+					doLayout(images, true);
+				});
 		};
 
 		var doLayout = function(images, animate) {
@@ -91,7 +93,7 @@
 				height = images[mid-1].origH, top, left, idx, j=1;
 
 			// hide description before doing layout
-			pluginData.container.find('.carousel-caption').hide();
+			pluginData.container.find('span').hide().css('opacity', 0);
 
 			$.each(images, function(i, img) {
 				idx = Math.abs(i+1-mid);
@@ -103,12 +105,16 @@
 				diff = sin[i] * options.squeeze;
 				left = posx += (i < mid) ? diff : images[i-1].cWidth + diff - img.cWidth;
 
-				var fn = function() {
-					if (i === mid-1) addDescription($(img));
-				};
-
+				var el = $(img).closest('.slide'),
+					fn = function() {
+						if (i === mid-1) {
+							// show caption gently
+							el.find('span').show().animate({opacity: 0.7});
+						}
+					};
+                    
 				if (animate) {
-					$(img).animate({
+					el.animate({
 						height   : height - (top*2),
 						zIndex   : mid-idx,
 						top      : top,
@@ -118,7 +124,7 @@
 				}
 				else
 				{
-					$(img).css({
+					el.css({
 						zIndex   : mid-idx,
 						height   : height - (top*2),
 						top      : top,
@@ -126,27 +132,18 @@
 						opacity  : 0
 					}).show().animate({opacity: i==mid-1 ? 1 : sin[j++]*0.8 }, fn);
 
-					if (options.shadow)
-						$(img).addClass('shadow');
+					if (options.shadow) {
+						el.addClass('shadow');						
+					}
 				}
 			});
 
 			if (!animate) {
-				$('#carousel-left').css('left', middle+50);
-				$('#carousel-right').css('left', middle+width-75);
+				pluginData.container
+					.find('.navigate-left').css('left', middle+50)
+					.end()
+					.find('.navigate-right').css('left', middle+width-75);
 			}
-		};
-
-		var addDescription = function(img) {
-			var caption = img.closest('.slide').find('.carousel-caption');
-			var position = img.position();
-
-			caption.css('width', img.width()).css({
-				top: position.top + img.height()-$(caption).height(),
-				left: position.left,
-				opacity: 0
-			}).show().animate({opacity: 0.8});
-
 		};
 
 		this.initialize = function () {
