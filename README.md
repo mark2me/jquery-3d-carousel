@@ -13,12 +13,10 @@ HTML markup:
 ```
 <div id="carousel">
     <div class="slide">
-        <a href="#"><img class="carousel-image" alt="Image Caption" src="images/carousel-1.jpg"></a>
-        <div class="carousel-caption">
-            <p>
-                Lorem ipsum dolor sit amet, consectetur elit.
-            </p>
-        </div>
+        <p>
+            <a href="#"><img alt="Image Caption" src="images/carousel-1.jpg"></a>
+            <span> Lorem ipsum dolor sit amet, consectetur elit. </span>
+        </p>
     </div>
     <div class="slide">
        ...
