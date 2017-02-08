@@ -2,7 +2,7 @@
 
 This is a jQuery plugin that shows your images in a cover-flow fashion.
 
-Here's a [nice demo](http://commutiva.pl/jQuery-Sliding-Carousel/).
+Here's a [nice demo](http://labs.devnode.pl/jQuery-Sliding-Carousel/).
 
 #### Usage:
 
